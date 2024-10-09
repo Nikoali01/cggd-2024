@@ -4,8 +4,8 @@
 
 #include <functional>
 #include <iostream>
-#include <linalg.h>
 #include <limits>
+#include <linalg.h>
 #include <memory>
 
 
@@ -75,16 +75,12 @@ namespace cg::renderer
 	inline void rasterizer<VB, RT>::clear_render_target(
 			const RT& in_clear_value, const float in_depth)
 	{
-		if (render_target) {
-			for (size_t i = 0; i <render_target -> count(); i++) {
-				render_target ->item(i) = in_clear_value;
-			}
+		for (size_t i = 0; i < render_target->count(); i++) {
+			render_target->item(i) = in_clear_value;
 		}
 
-		if (depth_buffer) {
-			for (size_t i = 0; i < depth_buffer -> count(); i++) {
-				depth_buffer->item(i) = in_depth;
-			}
+		for (size_t i = 0; i < depth_buffer->count(); i++) {
+			depth_buffer->item(i) = in_depth;
 		}
 	}
 
@@ -124,43 +120,43 @@ namespace cg::renderer
 				vertex.x = (vertex.x + 1.f) * width / 2.f;
 				vertex.y = (-vertex.y + 1.f) * height / 2.f;
 			}
-		int2 vertex_a = int2(static_cast<int>(vertices[0].x), static_cast<int>(vertices[0].y));
-		int2 vertex_b = int2(static_cast<int>(vertices[1].x), static_cast<int>(vertices[1].y));
-		int2 vertex_c = int2(static_cast<int>(vertices[2].x), static_cast<int>(vertices[2].y));
+			int2 vertex_a = int2(static_cast<int>(vertices[0].x), static_cast<int>(vertices[0].y));
+			int2 vertex_b = int2(static_cast<int>(vertices[1].x), static_cast<int>(vertices[1].y));
+			int2 vertex_c = int2(static_cast<int>(vertices[2].x), static_cast<int>(vertices[2].y));
 
-		int2 min_boarder = int2{0, 0};
-		int2 max_boarder = int2{static_cast<int>(width - 1), static_cast<int>(height - 1)};
+			int2 min_boarder = int2{0, 0};
+			int2 max_boarder = int2{static_cast<int>(width - 1), static_cast<int>(height - 1)};
 
-		int2 min_vertex = min(vertex_a, min(vertex_b, vertex_c));
-		int2 bb_begin = clamp(min_vertex, min_boarder, max_boarder);
+			int2 min_vertex = min(vertex_a, min(vertex_b, vertex_c));
+			int2 bb_begin = clamp(min_vertex, min_boarder, max_boarder);
 
-		int2 max_vertex = max(vertex_a, max(vertex_b, vertex_c));
-		int2 bb_end = clamp(max_vertex, min_boarder, max_boarder);
+			int2 max_vertex = max(vertex_a, max(vertex_b, vertex_c));
+			int2 bb_end = clamp(max_vertex, min_boarder, max_boarder);
 
-		int edge = edge_function(vertex_a, vertex_b, vertex_c);
+			int edge = edge_function(vertex_a, vertex_b, vertex_c);
 
-		for (int x = bb_begin.x; x <= bb_end.x; x++) {
-			for (int y = bb_begin.y; y <= bb_end.y; y++) {
-				int2 point{x, y};
-				int edge0 = edge_function(vertex_a, vertex_b, point);
-				int edge1 = edge_function(vertex_b, vertex_c, point);
-				int edge2 = edge_function(vertex_c, vertex_a, point);
+			for (int x = bb_begin.x; x <= bb_end.x; x++) {
+				for (int y = bb_begin.y; y <= bb_end.y; y++) {
+					int2 point{x, y};
+					int edge0 = edge_function(vertex_a, vertex_b, point);
+					int edge1 = edge_function(vertex_b, vertex_c, point);
+					int edge2 = edge_function(vertex_c, vertex_a, point);
 
-				if (edge0 >= 0 && edge1 >= 0 && edge2 >= 0) {
+					if (edge0 >= 0 && edge1 >= 0 && edge2 >= 0) {
 
-					float u = static_cast<float>(edge1) / static_cast<float>(edge);
-					float v = static_cast<float>(edge2) / static_cast<float>(edge);
-					float w = static_cast<float>(edge0) / static_cast<float>(edge);
-					float z = u * vertices[0].z + v * vertices[1].z + w * vertices[2].z;
+						float u = static_cast<float>(edge1) / static_cast<float>(edge);
+						float v = static_cast<float>(edge2) / static_cast<float>(edge);
+						float w = static_cast<float>(edge0) / static_cast<float>(edge);
+						float z = u * vertices[0].z + v * vertices[1].z + w * vertices[2].z;
 
-					if (depth_test(z, x, y)) {
-						auto pixel = pixel_shader(vertices[0], z);
-						render_target->item(x, y) = RT::from_color(pixel);
-						depth_buffer->item(x, y) = z;
+						if (depth_test(z, x, y)) {
+							auto pixel = pixel_shader(vertices[0], z);
+							render_target->item(x, y) = RT::from_color(pixel);
+							depth_buffer->item(x, y) = z;
+						}
 					}
 				}
 			}
-		}
 		}
 	}
 

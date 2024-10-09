@@ -73,23 +73,23 @@ float3 cg::world::model::compute_normal(const tinyobj::attrib_t& attrib, const t
 	auto b_id = mesh.indices[index_offset + 1];
 	auto c_id = mesh.indices[index_offset + 2];
 
-	float3 a(
+	float3 a{
 		attrib.vertices[3 * a_id.vertex_index],
 		attrib.vertices[3 * a_id.vertex_index + 1],
 		attrib.vertices[3 * a_id.vertex_index + 2]
-	);
+	};
 
-	float3 b(
+	float3 b{
 		attrib.vertices[3 * b_id.vertex_index],
 		attrib.vertices[3 * b_id.vertex_index + 1],
 		attrib.vertices[3 * b_id.vertex_index + 2]
-	);
+	};
 
-	float3 c(
+	float3 c{
 		attrib.vertices[3 * c_id.vertex_index],
 		attrib.vertices[3 * c_id.vertex_index + 1],
 		attrib.vertices[3 * c_id.vertex_index + 2]
-	);
+	};
 
 	return normalize(cross(b - a, c - a));
 }
