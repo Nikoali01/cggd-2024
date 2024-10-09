@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 project("Computer graphics in Game development")
 
+
 set(INCLUDE
         libs/stb
         libs/tinyobjloader
@@ -12,6 +13,7 @@ set(INCLUDE
         libs/cxxopts/include
         libs/D3DX12
         src)
+
 
 set(SOURCE
         src/settings.cpp

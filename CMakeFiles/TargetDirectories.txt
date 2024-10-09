@@ -1,0 +1,5 @@
+C:/Users/engli/Documents/CGGD2024/cggd-2024/CMakeFiles/Rasterization.dir
+C:/Users/engli/Documents/CGGD2024/cggd-2024/CMakeFiles/Raytracing.dir
+C:/Users/engli/Documents/CGGD2024/cggd-2024/CMakeFiles/DirectX12.dir
+C:/Users/engli/Documents/CGGD2024/cggd-2024/CMakeFiles/ALL_BUILD.dir
+C:/Users/engli/Documents/CGGD2024/cggd-2024/CMakeFiles/ZERO_CHECK.dir
