@@ -148,9 +148,9 @@ namespace cg::renderer
 
 				if (edge0 >= 0 && edge1 >= 0 && edge2 >= 0) {
 
-					float u = edge1 / edge;
-					float v = edge2 / edge;
-					float w = edge0 / edge;
+					float u = static_cast<float>(edge1) / static_cast<float>(edge);
+					float v = static_cast<float>(edge2) / static_cast<float>(edge);
+					float w = static_cast<float>(edge0) / static_cast<float>(edge);
 					float z = u * vertices[0].z + v * vertices[1].z + w * vertices[2].z;
 
 					if (depth_test(z, x, y)) {
