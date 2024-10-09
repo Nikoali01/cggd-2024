@@ -148,10 +148,10 @@ namespace cg::renderer
 
 				if (edge0 >= 0 && edge1 >= 0 && edge2 >= 0) {
 
-					int u = edge1 / edge;
-					int v = edge2 / edge;
-					int w = edge0 / edge;
-					int z = u * vertices[0].z + v * vertices[1].z + w * vertices[2].z;
+					float u = edge1 / edge;
+					float v = edge2 / edge;
+					float w = edge0 / edge;
+					float z = u * vertices[0].z + v * vertices[1].z + w * vertices[2].z;
 
 					if (depth_test(z, x, y)) {
 						auto pixel = pixel_shader(vertices[0], z);
