@@ -220,8 +220,6 @@ namespace cg::renderer
 					if (frame_id == accumulation_num - 1) {
 						render_target->item(x, y) = RT::from_float3(history_pixel);
 					}
-
-					render_target->item(x, y) = RT::from_color(payload.color);
 				}
 			}
 		}
