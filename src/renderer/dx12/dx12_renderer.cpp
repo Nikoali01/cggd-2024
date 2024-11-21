@@ -4,7 +4,7 @@
 #include "utils/window.h"
 
 #define STB_IMAGE_IMPLEMENTATION
-#include <stb_image.h>
+#include "stb_image.h"
 
 #include <filesystem>
 
@@ -29,7 +29,7 @@ void cg::renderer::dx12_renderer::init()
 	camera->set_z_far(settings->camera_z_far);
 
 	view_port = CD3DX12_VIEWPORT(0.f, 0.f, static_cast<float>(settings->width), static_cast<float>(settings->height));
-	scissor_rect = CD3DX12_RECT(0, 0, static_cast<long>(settings->width), static_cast<long>(settings->height));
+	scissor_rect = CD3DX12_RECT(0, 0, static_cast<LONG>(settings->width), static_cast<LONG>(settings->height));
 	load_pipeline();
 	load_assets();
 }
@@ -153,6 +153,7 @@ void cg::renderer::dx12_renderer::create_render_target_views()
 
 void cg::renderer::dx12_renderer::create_depth_buffer()
 {
+
 }
 
 void cg::renderer::dx12_renderer::create_command_allocators()
@@ -266,7 +267,7 @@ ComPtr<ID3DBlob> cg::renderer::dx12_renderer::compile_shader(const std::filesyst
 		OutputDebugStringA((char*)error->GetBufferPointer());
 		THROW_IF_FAILED(res);
 	}
-	return nullptr;
+	return shader;
 }
 
 void cg::renderer::dx12_renderer::create_pso(const std::string& shader_name)
